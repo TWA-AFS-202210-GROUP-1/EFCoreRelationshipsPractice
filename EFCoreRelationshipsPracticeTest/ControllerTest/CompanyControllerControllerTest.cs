@@ -5,9 +5,9 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     using EFCoreRelationshipsPractice.Dtos;
     using Newtonsoft.Json;
 
-    public class CompanyControllerTest : TestBase
+    public class CompanyControllerControllerTest : ControllerTestBase
     {
-        public CompanyControllerTest(CustomWebApplicationFactory<Program> factory)
+        public CompanyControllerControllerTest(CustomWebApplicationFactory<Program> factory)
             : base(factory)
         {
         }

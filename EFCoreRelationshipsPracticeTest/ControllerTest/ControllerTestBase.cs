@@ -1,13 +1,13 @@
 ﻿using EFCoreRelationshipsPractice.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EFCoreRelationshipsPracticeTest
+namespace EFCoreRelationshipsPracticeTest.ControllerTest
 {
-    public class TestBase : IClassFixture<CustomWebApplicationFactory<Program>>, IDisposable
+    public class ControllerTestBase : IClassFixture<CustomWebApplicationFactory<Program>>, IDisposable
     {
-        public TestBase(CustomWebApplicationFactory<Program> factory)
+        public ControllerTestBase(CustomWebApplicationFactory<Program> factory)
         {
-            this.Factory = factory;
+            Factory = factory;
         }
 
         protected CustomWebApplicationFactory<Program> Factory { get; }
