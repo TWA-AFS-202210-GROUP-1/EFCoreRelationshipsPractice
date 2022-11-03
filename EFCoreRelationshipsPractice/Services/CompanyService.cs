@@ -31,7 +31,12 @@ namespace EFCoreRelationshipsPractice.Services
 
         public async Task<CompanyDto> GetById(long id)
         {
-            throw new NotImplementedException();
+            var findCompany = await companyDbContext.Companies
+                .Include(company => company.Profile)
+                .Include(company => company.Employees)
+                .FirstOrDefaultAsync(company => company.Id == id);
+
+            return new CompanyDto(findCompany);
         }
 
         public async Task<int> AddCompany(CompanyDto companyDto)
