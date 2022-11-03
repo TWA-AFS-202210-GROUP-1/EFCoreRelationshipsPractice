@@ -139,6 +139,7 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
 
             // when
             await companyService.DeleteCompany(companyId);
+
             // then
             Assert.Equal(0, context.Companies.Count());
         }
