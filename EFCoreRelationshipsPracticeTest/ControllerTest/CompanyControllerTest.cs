@@ -153,7 +153,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Empty(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_many_companies_success()
         {
             var client = GetClient();
@@ -208,7 +208,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(2, returnCompanies.Count);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_get_company_by_id_success()
         {
             var client = GetClient();
