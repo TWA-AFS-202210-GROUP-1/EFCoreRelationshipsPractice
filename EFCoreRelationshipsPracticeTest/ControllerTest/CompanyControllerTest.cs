@@ -20,6 +20,11 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
+                //ProfileDTO = new ProfileDto()
+                //{
+                //    RegisteredCapital = 100010,
+                //    CertId = "100",
+                //},
             };
             //CompanyDto companyDto = new CompanyDto(name);
             //{
@@ -48,7 +53,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -67,8 +72,8 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Single(returnCompanies);
-            Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
+            Assert.Equal(companyDto.ProfileDTO.CertId, returnCompanies[0].ProfileDTO.CertId);
+            Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
         }
 
         [Fact(Skip = "fix it later")]
@@ -87,7 +92,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -106,8 +111,8 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Single(returnCompanies);
-            Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
+            Assert.Equal(companyDto.ProfileDTO.CertId, returnCompanies[0].ProfileDTO.CertId);
+            Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
             Assert.Equal(companyDto.Employees.Count, returnCompanies[0].Employees.Count);
             Assert.Equal(companyDto.Employees[0].Age, returnCompanies[0].Employees[0].Age);
             Assert.Equal(companyDto.Employees[0].Name, returnCompanies[0].Employees[0].Name);
@@ -128,7 +133,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100"
@@ -163,7 +168,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -181,7 +186,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100020,
                     CertId = "101",
@@ -218,7 +223,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -236,7 +241,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100020,
                     CertId = "101",

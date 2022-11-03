@@ -16,7 +16,7 @@ namespace EFCoreRelationshipsPractice.Dtos
 
         public string Name { get; set; }
 
-        public ProfileDto? Profile { get; set; }
+        public ProfileDto? ProfileDTO { get; set; }
 
         public List<EmployeeDto>? Employees { get; set; }
 
@@ -25,6 +25,14 @@ namespace EFCoreRelationshipsPractice.Dtos
             return new CompanyEntity()
             {
                 Name = Name,
+                Profile = ProfileDTO?.ToEntity(),
+                //Profile = this.ProfileDTO != null ? ProfileDTO.ToEntity(), null
+
+                //Profile = new ProfileEntity()
+                //{
+                //    RegisteredCapital = Profile.RegisteredCapital,
+                //    CertId = Profile.CertId,
+                //},
             };
             //throw new NotImplementedException();
         }
