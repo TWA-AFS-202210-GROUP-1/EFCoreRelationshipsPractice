@@ -109,7 +109,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(companyDto.EmployeeDtos[0].Name, returnCompanies[0].EmployeeDtos[0].Name);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_delete_company_and_related_employee_and_profile_success()
         {
             var client = GetClient();
@@ -144,7 +144,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Empty(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_many_companies_success()
         {
             var client = GetClient();
