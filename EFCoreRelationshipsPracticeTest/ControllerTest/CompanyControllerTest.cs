@@ -76,7 +76,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_company_with_profile_and_employees_success()
         {
             // given
@@ -84,7 +84,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -113,9 +113,9 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Single(returnCompanies);
             Assert.Equal(companyDto.ProfileDTO.CertId, returnCompanies[0].ProfileDTO.CertId);
             Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
-            Assert.Equal(companyDto.Employees.Count, returnCompanies[0].Employees.Count);
-            Assert.Equal(companyDto.Employees[0].Age, returnCompanies[0].Employees[0].Age);
-            Assert.Equal(companyDto.Employees[0].Name, returnCompanies[0].Employees[0].Name);
+            Assert.Equal(companyDto.EmployeesDTO.Count, returnCompanies[0].EmployeesDTO.Count);
+            Assert.Equal(companyDto.EmployeesDTO[0].Age, returnCompanies[0].EmployeesDTO[0].Age);
+            Assert.Equal(companyDto.EmployeesDTO[0].Name, returnCompanies[0].EmployeesDTO[0].Name);
         }
 
         [Fact(Skip = "fix it later")]
@@ -125,7 +125,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -160,7 +160,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -178,7 +178,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto2 = new CompanyDto
             {
                 Name = "MS",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -215,7 +215,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -233,7 +233,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto2 = new CompanyDto
             {
                 Name = "MS",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {

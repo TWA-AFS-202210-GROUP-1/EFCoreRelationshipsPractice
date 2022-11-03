@@ -9,6 +9,8 @@ namespace EFCoreRelationshipsPractice.Dtos
         {
             Name = companyEntity.Name;
             ProfileDTO = companyEntity.Profile != null ? new ProfileDto(companyEntity.Profile) : null;
+            EmployeesDTO = companyEntity.EmployeeList.Select(employeeEntity => new EmployeeDto(employeeEntity)).ToList();
+
         }
 
         public CompanyDto()
@@ -19,7 +21,7 @@ namespace EFCoreRelationshipsPractice.Dtos
 
         public ProfileDto? ProfileDTO { get; set; }
 
-        public List<EmployeeDto>? Employees { get; set; }
+        public List<EmployeeDto>? EmployeesDTO { get; set; }
 
         public CompanyEntity ToCompanyEntity()
         {
@@ -27,6 +29,7 @@ namespace EFCoreRelationshipsPractice.Dtos
             {
                 Name = Name,
                 Profile = ProfileDTO?.ToEntity(),
+                EmployeeList = EmployeesDTO?.Select(employeeDto => employeeDto.ToEntity()).ToList(),
                 //Profile = this.ProfileDTO != null ? ProfileDTO.ToEntity(), null
 
                 //Profile = new ProfileEntity()
