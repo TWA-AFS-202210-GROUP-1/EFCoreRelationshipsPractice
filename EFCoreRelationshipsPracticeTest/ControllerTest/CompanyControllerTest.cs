@@ -64,8 +64,9 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
       Assert.Single(returnCompanies);
-      Assert.Equal(companyDto.ProfileDto.CertId, returnCompanies[0].ProfileDto.CertId);
-      Assert.Equal(companyDto.ProfileDto.RegisteredCapital, returnCompanies[0].ProfileDto.RegisteredCapital);
+      Assert.Equal(companyDto.ProfileDto.CertId, returnCompanies[0].ProfileDto?.CertId);
+      Assert.Equal(companyDto.ProfileDto.RegisteredCapital,
+                   returnCompanies[0].ProfileDto?.RegisteredCapital);
     }
 
     [Fact]
@@ -73,26 +74,10 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     {
       // given
       var client = GetClient();
-      CompanyDto companyDto = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
 
       // when
-      var httpContent = JsonConvert.SerializeObject(companyDto);
+      var httpContent = JsonConvert.SerializeObject(companyDtos[0]);
       StringContent content = new StringContent(httpContent, Encoding.UTF8, MediaTypeNames.Application.Json);
       await client.PostAsync("/companies", content);
 
@@ -103,36 +88,22 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
       Assert.Single(returnCompanies);
-      Assert.Equal(companyDto.ProfileDto.CertId, returnCompanies[0].ProfileDto.CertId);
-      Assert.Equal(companyDto.ProfileDto.RegisteredCapital, returnCompanies[0].ProfileDto.RegisteredCapital);
-      Assert.Equal(companyDto.EmployeeDtos.Count, returnCompanies[0].EmployeeDtos.Count);
-      Assert.Equal(companyDto.EmployeeDtos[0].Age, returnCompanies[0].EmployeeDtos[0].Age);
-      Assert.Equal(companyDto.EmployeeDtos[0].Name, returnCompanies[0].EmployeeDtos[0].Name);
+      Assert.Equal(companyDtos[0].ProfileDto?.CertId, returnCompanies[0].ProfileDto?.CertId);
+      Assert.Equal(companyDtos[0].ProfileDto?.RegisteredCapital,
+                   returnCompanies[0].ProfileDto?.RegisteredCapital);
+      Assert.Equal(companyDtos[0].EmployeeDtos?.Count, returnCompanies[0].EmployeeDtos?.Count);
+      Assert.Equal(companyDtos[0].EmployeeDtos?[0].Age, returnCompanies[0].EmployeeDtos?[0].Age);
+      Assert.Equal(companyDtos[0].EmployeeDtos?[0].Name,
+                   returnCompanies[0].EmployeeDtos?[0].Name);
     }
 
     [Fact]
     public async Task Should_delete_company_and_related_employee_and_profile_successfully()
     {
       var client = GetClient();
-      CompanyDto companyDto = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
 
-      var httpContent = JsonConvert.SerializeObject(companyDto);
+      var httpContent = JsonConvert.SerializeObject(companyDtos[0]);
       StringContent content = new StringContent(httpContent, Encoding.UTF8, MediaTypeNames.Application.Json);
 
       var response = await client.PostAsync("/companies", content);
@@ -149,46 +120,12 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     public async Task Should_create_many_companies_successfully()
     {
       var client = GetClient();
-      CompanyDto companyDto = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
 
-      CompanyDto companyDto2 = new CompanyDto
-      {
-        Name = "MS",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Jerry",
-                        Age = 18,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100020,
-          CertId = "101",
-        },
-      };
-
-      var httpContent = JsonConvert.SerializeObject(companyDto);
+      var httpContent = JsonConvert.SerializeObject(companyDtos[0]);
       StringContent content = new StringContent(httpContent, Encoding.UTF8, MediaTypeNames.Application.Json);
       await client.PostAsync("/companies", content);
-      var httpContent2 = JsonConvert.SerializeObject(companyDto2);
+      var httpContent2 = JsonConvert.SerializeObject(companyDtos[1]);
       StringContent content2 = new StringContent(httpContent2, Encoding.UTF8, MediaTypeNames.Application.Json);
       await client.PostAsync("/companies", content2);
 
@@ -204,47 +141,13 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     public async Task Should_get_company_by_id_successfully()
     {
       var client = GetClient();
-      CompanyDto companyDto = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
 
-      CompanyDto companyDto2 = new CompanyDto
-      {
-        Name = "MS",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Jerry",
-                        Age = 18,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100020,
-          CertId = "101",
-        },
-      };
-
-      var httpContent = JsonConvert.SerializeObject(companyDto);
+      var httpContent = JsonConvert.SerializeObject(companyDtos[0]);
       StringContent content = new StringContent(httpContent, Encoding.UTF8, MediaTypeNames.Application.Json);
       var companyResponse = await client.PostAsync("/companies", content);
 
-      var httpContent2 = JsonConvert.SerializeObject(companyDto2);
+      var httpContent2 = JsonConvert.SerializeObject(companyDtos[1]);
       StringContent content2 = new StringContent(httpContent2, Encoding.UTF8, MediaTypeNames.Application.Json);
       await client.PostAsync("/companies", content2);
 

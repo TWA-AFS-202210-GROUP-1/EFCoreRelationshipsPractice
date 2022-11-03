@@ -1,5 +1,4 @@
-﻿using EFCoreRelationshipsPractice.Dtos;
-using EFCoreRelationshipsPractice.Repository;
+﻿using EFCoreRelationshipsPractice.Repository;
 using EFCoreRelationshipsPractice.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,27 +16,11 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
       CompanyService companyService = new CompanyService(context);
 
       // when
-      await companyService.AddCompany(companyDto);
+      await companyService.AddCompany(companyDtos[0]);
 
       // then
       Assert.Equal(1, context.Companies.Count());
@@ -48,52 +31,21 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto1 = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
+      var companyService = new CompanyService(context);
 
-      CompanyDto companyDto2 = new CompanyDto
+      foreach (var companyDto in companyDtos)
       {
-        Name = "MS",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Jerry",
-                        Age = 18,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100020,
-          CertId = "101",
-        },
-      };
-      CompanyService companyService = new CompanyService(context);
-      await companyService.AddCompany(companyDto1);
-      await companyService.AddCompany(companyDto2);
+        await companyService.AddCompany(companyDto);
+      }
 
       // when
       var returnedCompanies = await companyService.GetAll();
 
       // then
-      Assert.Equal(2, returnedCompanies.Count());
-      Assert.Equal(companyDto2.Name, returnedCompanies[0].Name);
-      Assert.Equal(companyDto1.Name, returnedCompanies[1].Name);
+      Assert.Equal(2, returnedCompanies.Count);
+      Assert.Equal(companyDtos[1].Name, returnedCompanies[0].Name);
+      Assert.Equal(companyDtos[0].Name, returnedCompanies[1].Name);
     }
 
     [Fact]
@@ -101,50 +53,21 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto1 = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
+      var companyService = new CompanyService(context);
 
-      CompanyDto companyDto2 = new CompanyDto
-      {
-        Name = "MS",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Jerry",
-                        Age = 18,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100020,
-          CertId = "101",
-        },
-      };
-      CompanyService companyService = new CompanyService(context);
-      var companyId = await companyService.AddCompany(companyDto1);
-      await companyService.AddCompany(companyDto2);
+      var companyId = await companyService.AddCompany(companyDtos[0]);
+      await companyService.AddCompany(companyDtos[1]);
 
       // when
       var returnedCompany = await companyService.GetById(companyId);
 
       // then
-      Assert.Equal(companyDto1.Name, returnedCompany.Name);
+      Assert.Equal(companyDtos[0].Name, returnedCompany.Name);
+      Assert.Equal(companyDtos[0].EmployeeDtos?.First().ToString(),
+                   returnedCompany.EmployeeDtos?.First().ToString());
+      Assert.Equal(companyDtos[0].ProfileDto?.ToString(),
+                   returnedCompany.ProfileDto?.ToString());
     }
 
     [Fact]
@@ -152,51 +75,18 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto1 = new CompanyDto
-      {
-        Name = "IBM",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Tom",
-                        Age = 19,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100010,
-          CertId = "100",
-        },
-      };
+      var companyDtos = PrepareTestCompanyDtos();
+      var companyService = new CompanyService(context);
 
-      CompanyDto companyDto2 = new CompanyDto
-      {
-        Name = "MS",
-        EmployeeDtos = new List<EmployeeDto>()
-                {
-                    new EmployeeDto()
-                    {
-                        Name = "Jerry",
-                        Age = 18,
-                    },
-                },
-        ProfileDto = new ProfileDto()
-        {
-          RegisteredCapital = 100020,
-          CertId = "101",
-        },
-      };
-      CompanyService companyService = new CompanyService(context);
-      var companyId = await companyService.AddCompany(companyDto1);
-      await companyService.AddCompany(companyDto2);
+      var companyId = await companyService.AddCompany(companyDtos[0]);
+      await companyService.AddCompany(companyDtos[1]);
 
       // when
       await companyService.DeleteCompany(companyId);
 
       // then
       Assert.Equal(1, context.Companies.Count());
-      Assert.Equal(companyDto2.Name, context.Companies.First().Name);
+      Assert.Equal(companyDtos[1].Name, context.Companies.First().Name);
     }
 
     private CompanyDbContext GetCompanyDbContext()

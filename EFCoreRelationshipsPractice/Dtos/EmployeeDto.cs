@@ -26,5 +26,10 @@ namespace EFCoreRelationshipsPractice.Dtos
         Age = Age,
       };
     }
+
+    public override string ToString()
+    {
+      return $"Name: {Name}, Age: {Age}";
+    }
   }
 }

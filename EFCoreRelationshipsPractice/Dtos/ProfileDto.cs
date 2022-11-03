@@ -1,4 +1,6 @@
 ﻿using EFCoreRelationshipsPractice.Model;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Xml.Linq;
 
 namespace EFCoreRelationshipsPractice.Dtos
 {
@@ -24,6 +26,11 @@ namespace EFCoreRelationshipsPractice.Dtos
         RegisteredCapital = RegisteredCapital,
         CertId = CertId,
       };
+    }
+
+    public override string ToString()
+    {
+      return $"RegisteredCapital: {RegisteredCapital}, CertId: {CertId}";
     }
   }
 }
