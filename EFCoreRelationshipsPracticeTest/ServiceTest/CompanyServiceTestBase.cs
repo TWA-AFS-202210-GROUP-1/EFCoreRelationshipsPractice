@@ -1,4 +1,5 @@
-﻿using EFCoreRelationshipsPractice.Models;
+﻿using EFCoreRelationshipsPractice.Dtos;
+using EFCoreRelationshipsPractice.Models;
 using EFCoreRelationshipsPractice.Repository;
 using EFCoreRelationshipsPractice.Services;
 using Microsoft.EntityFrameworkCore;
@@ -7,8 +8,8 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
 {
     public class CompanyServiceTestBase : IDisposable
     {
-        internal readonly CompanyService CompanyService;
-        internal readonly CompanyDbContext CompanyDbContext;
+        internal CompanyService CompanyService;
+        internal CompanyDbContext CompanyDbContext;
         public CompanyServiceTestBase()
         {
             var options = new DbContextOptionsBuilder<CompanyDbContext>()
@@ -17,11 +18,9 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
 
             CompanyDbContext = new CompanyDbContext(options);
             CompanyService = new CompanyService(CompanyDbContext);
-
-            InitDataBase();
         }
 
-        private void InitDataBase()
+        internal void InitDataBase()
         {
             CompanyDbContext.Companies.AddRange(new List<CompanyEntity>()
             {
@@ -31,7 +30,17 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
             CompanyDbContext.SaveChanges();
         }
 
-        private List<EmployeeEntity> GetInitEmployees()
+        internal CompanyDto GetACompanyDto()
+        {
+            return new CompanyDto()
+            {
+                Name = "SLB", 
+                EmployeeDtos = new List<EmployeeDto>() { new EmployeeDto(){Age = 18, Name = "Xu"}},
+                ProfileDto = new ProfileDto() { CertId = "SLBCert", RegisteredCapital = 1000 }
+            };
+        }
+
+        internal List<EmployeeEntity> GetInitEmployees()
         {
             return new List<EmployeeEntity>()
             {
@@ -42,7 +51,10 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
 
         public void Dispose()
         {
-            CompanyDbContext.Dispose();
+            CompanyDbContext.RemoveRange(CompanyDbContext.Employees);
+            CompanyDbContext.RemoveRange(CompanyDbContext.Companies);
+            CompanyDbContext.RemoveRange(CompanyDbContext.Profiles);
+
         }
     }
 }
