@@ -30,15 +30,7 @@ namespace EFCoreRelationshipsPractice.Dtos
                 Name = Name,
                 Profile = ProfileDTO?.ToEntity(),
                 EmployeeList = EmployeesDTO?.Select(employeeDto => employeeDto.ToEntity()).ToList(),
-                //Profile = this.ProfileDTO != null ? ProfileDTO.ToEntity(), null
-
-                //Profile = new ProfileEntity()
-                //{
-                //    RegisteredCapital = Profile.RegisteredCapital,
-                //    CertId = Profile.CertId,
-                //},
             };
-            //throw new NotImplementedException();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace EFCoreRelationshipsPractice.Dtos
         }
 
         public int RegisteredCapital { get; set; }
+
         public string CertId { get; set; }
 
         public ProfileEntity ToEntity()
