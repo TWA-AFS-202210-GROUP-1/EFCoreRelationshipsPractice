@@ -109,7 +109,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       Assert.Equal(companyDto.EmployeeDtos[0].Name, returnCompanies[0].EmployeeDtos[0].Name);
     }
 
-    [Fact(Skip = "fix it later")]
+    [Fact]
     public async Task Should_delete_company_and_related_employee_and_profile_successfully()
     {
       var client = GetClient();
@@ -127,7 +127,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
-          CertId = "100"
+          CertId = "100",
         },
       };
 
