@@ -8,6 +8,7 @@ namespace EFCoreRelationshipsPractice.Dtos
         public CompanyDto(CompanyEntity companyEntity)
         {
             Name = companyEntity.Name;
+            ProfileDTO = companyEntity.Profile != null ? new ProfileDto(companyEntity.Profile) : null;
         }
 
         public CompanyDto()
