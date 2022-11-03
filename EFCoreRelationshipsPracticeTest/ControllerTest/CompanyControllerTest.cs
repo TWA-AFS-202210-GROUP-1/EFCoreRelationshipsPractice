@@ -9,6 +9,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     using Newtonsoft.Json;
     using Xunit;
 
+    [Collection("test")]
     public class CompanyControllerTest : TestBase
     {
         public CompanyControllerTest(CustomWebApplicationFactory<Program> factory)

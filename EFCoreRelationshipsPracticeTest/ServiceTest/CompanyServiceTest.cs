@@ -11,6 +11,7 @@ using Xunit;
 
 namespace EFCoreRelationshipsPracticeTest.ServiceTest
 {
+    [Collection("test")]
     public class CompanyServiceTest : TestBase
     {
         private Task<CompanyService> companyService;
