@@ -61,6 +61,23 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
             Assert.Equal("SLB", companyEntities[0].Name);
         }
 
+        [Fact]
+        public async void Should_delete_company_successfully_when_delete_by_id_given_a_right_id()
+        {
+            //given
+            var companyDto = GetACompanyDto();
+            var companyId = await CompanyService.AddCompany(companyDto);
+            Assert.Single(CompanyDbContext.Companies.ToList());
+
+            //when
+            await CompanyService.DeleteCompany(companyId);
+
+            //then
+            Assert.Empty(CompanyDbContext.Companies.ToList());
+            Assert.Empty(CompanyDbContext.Companies.ToList());
+            Assert.Empty(CompanyDbContext.Companies.ToList());
+        }
+
 
     }
 }
