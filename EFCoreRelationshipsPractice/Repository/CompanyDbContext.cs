@@ -15,5 +15,11 @@ namespace EFCoreRelationshipsPractice.Repository
             get;
             set;
         }
+
+        public DbSet<ProfileEntity> Profiles
+        {
+            get;
+            set;
+        }
     }
 }
