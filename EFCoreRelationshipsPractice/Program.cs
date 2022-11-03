@@ -28,8 +28,12 @@ public partial class Program
     {
       var dbContext = scope.ServiceProvider.GetRequiredService<CompanyDbContext>();
       using var context = scope.ServiceProvider.GetService<CompanyDbContext>();
-      context.Database.EnsureDeleted();
-      context.Database.EnsureCreated();
+      //context.Database.EnsureDeleted();
+      //context.Database.EnsureCreated();
+      if (context.Database.IsRelational())
+      {
+        dbContext.Database.Migrate();
+      }
     }
 
     // Configure the HTTP request pipeline.
