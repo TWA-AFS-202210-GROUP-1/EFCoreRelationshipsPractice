@@ -20,6 +20,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         {
             // given
             var context = GetCompanyDbContext();
+            CompanyService companyService = new CompanyService(context);
             CompanyDto companyDto = new CompanyDto();
             companyDto.Name = "IBM";
             companyDto.EmployeesDto = new List<EmployeeDto>()
@@ -31,7 +32,6 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                 RegisteredCapital = 100010,
                 CertId = "100",
             };
-            CompanyService companyService = new CompanyService(context);
             // when
             await companyService.AddCompany(companyDto);
 
@@ -44,6 +44,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         {
             // given
             var context = GetCompanyDbContext();
+            CompanyService companyService = new CompanyService(context);
             CompanyDto companyDto = new CompanyDto();
             companyDto.Name = "IBM";
             companyDto.EmployeesDto = new List<EmployeeDto>()
@@ -55,7 +56,6 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                 RegisteredCapital = 100010,
                 CertId = "100",
             };
-            CompanyService companyService = new CompanyService(context);
             var targetId = await companyService.AddCompany(companyDto);
             // when
             CompanyDto targetCompany = await companyService.GetById(targetId);
@@ -63,6 +63,30 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             // then
             Assert.Equal("IBM", targetCompany.Name);
         }
+
+        [Fact]
+        public async Task Should_get_all_companies_success_via_company_service()
+        {
+            // given
+            var context = GetCompanyDbContext();
+            CompanyService companyService = new CompanyService(context);
+            List<CompanyDto> companyDtos = new List<CompanyDto>()
+            {
+                new CompanyDto() { Name = "IBM",
+                    EmployeesDto = new List<EmployeeDto>(){new EmployeeDto() { Name = "Tom", Age = 19, } },
+                    ProfileDto = new ProfileDto(){RegisteredCapital = 100010, CertId = "100",}},
+                new CompanyDto() { Name = "slb",
+                    EmployeesDto = new List<EmployeeDto>(){new EmployeeDto() { Name = "Andy", Age = 18, } },
+                    ProfileDto = new ProfileDto(){RegisteredCapital = 100010, CertId = "1000",}}
+            };
+            companyDtos.ForEach(async companyDto => await companyService.AddCompany(companyDto));
+            //when
+            List<CompanyDto> targetCompanies = await companyService.GetAll();
+            //then
+            Assert.Equal("slb", targetCompanies[1].Name);
+            Assert.Equal(1, targetCompanies[1].EmployeesDto.Count);
+        }
+           
 
         //[Fact]
         //public async Task Should_create_company_with_profile_success()
