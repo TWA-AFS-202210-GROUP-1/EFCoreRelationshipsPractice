@@ -20,7 +20,7 @@ namespace EFCoreRelationshipsPracticeTest
 
             context.Employees.RemoveRange(context.Employees); // clear employees
             context.Companies.RemoveRange(context.Companies); // clear companies
-
+            context.Profiles.RemoveRange(context.Profiles); // clear profiles
             context.SaveChanges();
         }
 
