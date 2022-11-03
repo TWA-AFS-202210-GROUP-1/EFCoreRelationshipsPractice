@@ -53,6 +53,7 @@ namespace EFCoreRelationshipsPractice.Services
                 .Include(company => company.EmployeeList)
                 .Include(company => company.Profile)
                 .FirstOrDefaultAsync(company => company.Id.Equals(id));
+            companyDbContext.Profiles.Remove(companyEntity.Profile);
             companyDbContext.Companies.Remove(companyEntity);
             await companyDbContext.SaveChangesAsync();
         }
