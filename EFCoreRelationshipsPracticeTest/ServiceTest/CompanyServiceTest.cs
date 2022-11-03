@@ -53,7 +53,7 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto = new CompanyDto
+      CompanyDto companyDto1 = new CompanyDto
       {
         Name = "IBM",
         EmployeeDtos = new List<EmployeeDto>()
@@ -89,7 +89,7 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
         },
       };
       CompanyService companyService = new CompanyService(context);
-      await companyService.AddCompany(companyDto);
+      await companyService.AddCompany(companyDto1);
       await companyService.AddCompany(companyDto2);
 
       // when
@@ -97,8 +97,8 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
 
       // then
       Assert.Equal(2, returnedCompanies.Count());
-      Assert.Equal("MS", returnedCompanies[0].Name);
-      Assert.Equal("IBM", returnedCompanies[1].Name);
+      Assert.Equal(companyDto2.Name, returnedCompanies[0].Name);
+      Assert.Equal(companyDto1.Name, returnedCompanies[1].Name);
     }
 
     [Fact]
@@ -106,7 +106,7 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
     {
       // give
       var context = GetCompanyDbContext();
-      CompanyDto companyDto = new CompanyDto
+      CompanyDto companyDto1 = new CompanyDto
       {
         Name = "IBM",
         EmployeeDtos = new List<EmployeeDto>()
@@ -142,16 +142,14 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
         },
       };
       CompanyService companyService = new CompanyService(context);
-      await companyService.AddCompany(companyDto);
+      var companyId = await companyService.AddCompany(companyDto1);
       await companyService.AddCompany(companyDto2);
 
       // when
-      var returnedCompanies = await companyService.GetById();
+      var returnedCompany = await companyService.GetById(companyId);
 
       // then
-      Assert.Equal(2, returnedCompanies.Count());
-      Assert.Equal("MS", returnedCompanies[0].Name);
-      Assert.Equal("IBM", returnedCompanies[1].Name);
+      Assert.Equal(companyDto1.Name, returnedCompany.Name);
     }
 
     private CompanyDbContext GetCompanyDbContext()
