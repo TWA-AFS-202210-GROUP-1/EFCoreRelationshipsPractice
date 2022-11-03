@@ -109,7 +109,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(companyDto.EmployeesDto[0].Name, returnCompanies[0].EmployeesDto[0].Name);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_delete_company_and_related_employee_and_profile_success()
         {
             var client = GetClient();
