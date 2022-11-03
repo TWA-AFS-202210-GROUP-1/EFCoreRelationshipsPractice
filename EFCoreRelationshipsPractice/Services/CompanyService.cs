@@ -27,7 +27,7 @@ namespace EFCoreRelationshipsPractice.Services
 
         }
 
-        public async Task<CompanyDto> GetById(long id)
+        public async Task<CompanyDto> GetById(int id)
         {
             throw new NotImplementedException();
         }

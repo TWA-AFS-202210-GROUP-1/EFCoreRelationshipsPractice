@@ -40,7 +40,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Single(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_company_with_profile_success()
         {
             // given
