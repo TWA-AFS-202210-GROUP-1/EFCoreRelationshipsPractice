@@ -5,16 +5,14 @@ using System.Threading.Tasks;
 
 namespace EFCoreRelationshipsPractice.Model
 {
-    public class CompanyEntity
+    public class EmployeeEntity
     {
-        public CompanyEntity() { }
+        public EmployeeEntity() { }
 
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public ProfileEntity? Profile { get; set; }
-
-        public List<EmployeeEntity>? Employees { get; set; }
+        public int Age { get; set; }
     }
 }
