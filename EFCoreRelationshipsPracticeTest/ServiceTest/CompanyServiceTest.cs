@@ -30,27 +30,10 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         {
             // given
             var context = GetCompanyDbContext();
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.EmployeeDtos = new List<EmployeeDto>()
-            {
-                new EmployeeDto()
-                {
-                    Name = "Tom",
-                    Age = 9,
-                },
-            };
-
-            companyDto.ProfileDto = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100",
-            };
-
             CompanyService companyService = new CompanyService(context);
 
             // when
-            await companyService.AddCompany(companyDto);
+            await companyService.AddCompany(CompanyDto1());
 
             // then
             Assert.Equal(1, context.Companies.Count());
@@ -61,16 +44,10 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         {
             // given
             var context = GetCompanyDbContext();
-            CompanyDto companyDto1 = new CompanyDto();
-            companyDto1.Name = "IBM";
-
-            CompanyDto companyDto2 = new CompanyDto();
-            companyDto2.Name = "SLB";
-
             CompanyService companyService = new CompanyService(context);
 
-            await companyService.AddCompany(companyDto1);
-            await companyService.AddCompany(companyDto2);
+            await companyService.AddCompany(CompanyDto1());
+            await companyService.AddCompany(CompanyDto2());
 
             // when
             var allCompanies = await companyService.GetAll();
@@ -84,22 +61,80 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
         {
             // given
             var context = GetCompanyDbContext();
-            CompanyDto companyDto1 = new CompanyDto();
-            companyDto1.Name = "IBM";
-
-            CompanyDto companyDto2 = new CompanyDto();
-            companyDto2.Name = "SLB";
 
             CompanyService companyService = new CompanyService(context);
 
-            var id = await companyService.AddCompany(companyDto1);
-            await companyService.AddCompany(companyDto2);
+            var id = await companyService.AddCompany(CompanyDto1());
+            await companyService.AddCompany(CompanyDto2());
 
-            // whenW
+            // when
             var companyDtoGet = await companyService.GetById(id);
 
             // then
-            Assert.Equal("IBM", companyDtoGet.Name);
+            Assert.Equal(CompanyDto1().Name, companyDtoGet.Name);
+        }
+
+        [Fact]
+        public async Task Should_delete_company_by_id_via_company_service()
+        {
+            // given
+            var context = GetCompanyDbContext();
+
+            CompanyService companyService = new CompanyService(context);
+
+            var id = await companyService.AddCompany(CompanyDto1());
+            await companyService.AddCompany(CompanyDto2());
+
+            // when
+            await companyService.DeleteCompany(id);
+
+            // then
+            Assert.Equal(1, context.Companies.Count());
+            Assert.Equal(CompanyDto2().Name, context.Companies.ToList()[0].Name);
+        }
+
+        private CompanyDto CompanyDto1()
+        {
+            CompanyDto companyDto = new CompanyDto()
+            {
+                Name = "IBM",
+                EmployeeDtos = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                },
+                ProfileDto = new ProfileDto()
+                {
+                    RegisteredCapital = 100010,
+                    CertId = "100",
+                },
+            };
+            return companyDto;
+        }
+
+        private CompanyDto CompanyDto2()
+        {
+            CompanyDto companyDto = new CompanyDto()
+            {
+                Name = "SLB",
+                EmployeeDtos = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Emilie",
+                        Age = 20,
+                    },
+                },
+                ProfileDto = new ProfileDto()
+                {
+                    RegisteredCapital = 100020,
+                    CertId = "150",
+                },
+            };
+            return companyDto;
         }
     }
 }

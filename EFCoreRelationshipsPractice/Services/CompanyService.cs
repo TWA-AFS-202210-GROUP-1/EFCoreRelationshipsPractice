@@ -63,7 +63,6 @@ namespace EFCoreRelationshipsPractice.Services
                 .FirstOrDefaultAsync(company => company.Id == id);
 
             companyDbContext.Companies.Remove(findCompany);
-            companyDbContext.Profiles.Remove(findCompany.Profile);
             await companyDbContext.SaveChangesAsync();
         }
     }
