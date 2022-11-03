@@ -48,10 +48,14 @@ namespace EFCoreRelationshipsPractice.Services
 
         public async Task DeleteCompany(int id)
         {
-            var employeeEntitiesToBeDeleted = companyDbContext.Employees.Where(_ => _.Id == id);
-            companyDbContext.Employees.RemoveRange(employeeEntitiesToBeDeleted);
-            var companyEntityToBeDeleted = await companyDbContext.Companies.FindAsync(id);
+           
+            var companyEntityToBeDeleted = await companyDbContext.Companies
+                .Include(_ => _.Profile)
+                .Include(_ => _.Employees)
+                .FirstOrDefaultAsync(_=>_.Id ==id);
+            companyDbContext.Employees.RemoveRange(companyEntityToBeDeleted.Employees);
             companyDbContext.Companies.Remove(companyEntityToBeDeleted);
+            companyDbContext.Profiles.Remove(companyEntityToBeDeleted.Profile);
 
             await companyDbContext.SaveChangesAsync();
         }
