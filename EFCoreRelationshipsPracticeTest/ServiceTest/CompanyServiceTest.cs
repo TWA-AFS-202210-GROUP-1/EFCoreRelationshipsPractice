@@ -21,17 +21,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             // given
             var context = GetCompanyDbContext();
             CompanyService companyService = new CompanyService(context);
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.EmployeesDto = new List<EmployeeDto>()
-            {
-                new EmployeeDto() { Name = "Tom", Age = 19, }
-            };
-            companyDto.ProfileDto = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100",
-            };
+            CompanyDto companyDto = PrepareAddCompanyDto();
             // when
             await companyService.AddCompany(companyDto);
 
@@ -45,17 +35,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             // given
             var context = GetCompanyDbContext();
             CompanyService companyService = new CompanyService(context);
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.EmployeesDto = new List<EmployeeDto>()
-            {
-                new EmployeeDto() { Name = "Tom", Age = 19, }
-            };
-            companyDto.ProfileDto = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100",
-            };
+            CompanyDto companyDto = PrepareAddCompanyDto();
             var targetId = await companyService.AddCompany(companyDto);
             // when
             CompanyDto targetCompany = await companyService.GetById(targetId);
@@ -70,16 +50,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             // given
             var context = GetCompanyDbContext();
             CompanyService companyService = new CompanyService(context);
-            List<CompanyDto> companyDtos = new List<CompanyDto>()
-            {
-                new CompanyDto() { Name = "IBM",
-                    EmployeesDto = new List<EmployeeDto>(){new EmployeeDto() { Name = "Tom", Age = 19, } },
-                    ProfileDto = new ProfileDto(){RegisteredCapital = 100010, CertId = "100",}},
-                new CompanyDto() { Name = "slb",
-                    EmployeesDto = new List<EmployeeDto>(){new EmployeeDto() { Name = "Andy", Age = 18, } },
-                    ProfileDto = new ProfileDto(){RegisteredCapital = 100010, CertId = "1000",}}
-            };
-            companyDtos.ForEach(async companyDto => await companyService.AddCompany(companyDto));
+            PrepareCompaniesDto(companyService);
             //when
             List<CompanyDto> targetCompanies = await companyService.GetAll();
             //then
@@ -93,6 +64,15 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             // given
             var context = GetCompanyDbContext();
             CompanyService companyService = new CompanyService(context);
+            var companiesIds = PrepareCompaniesDto(companyService);
+            //when
+            await companyService.DeleteCompany(await companiesIds[0]);
+            //then
+            Assert.Equal(1, context.Companies.Count());
+        }
+
+        private List<Task<int>> PrepareCompaniesDto(CompanyService companyService)
+        {
             List<CompanyDto> companyDtos = new List<CompanyDto>()
             {
                 new CompanyDto() { Name = "IBM",
@@ -103,13 +83,24 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                     ProfileDto = new ProfileDto(){RegisteredCapital = 100010, CertId = "1000",}}
             };
             var companiesIds = companyDtos.Select(async companyDto => await companyService.AddCompany(companyDto)).ToList();
-            //when
-            await companyService.DeleteCompany(await companiesIds[0]);
-            //then
-            Assert.Equal(1, context.Companies.Count());
+            return companiesIds;
         }
 
-
+        private CompanyDto PrepareAddCompanyDto()
+        {
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.Name = "IBM";
+            companyDto.EmployeesDto = new List<EmployeeDto>()
+            {
+                new EmployeeDto() { Name = "Tom", Age = 19, }
+            };
+            companyDto.ProfileDto = new ProfileDto()
+            {
+                RegisteredCapital = 100010,
+                CertId = "100",
+            };
+            return companyDto;
+        }
 
         private CompanyDbContext GetCompanyDbContext()
         {
