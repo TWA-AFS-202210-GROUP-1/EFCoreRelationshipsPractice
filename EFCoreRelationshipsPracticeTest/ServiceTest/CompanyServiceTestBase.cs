@@ -54,7 +54,7 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
             CompanyDbContext.RemoveRange(CompanyDbContext.Employees);
             CompanyDbContext.RemoveRange(CompanyDbContext.Companies);
             CompanyDbContext.RemoveRange(CompanyDbContext.Profiles);
-
+            CompanyDbContext.SaveChanges();
         }
     }
 }
