@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using EFCoreRelationshipsPractice.Dtos;
+﻿using EFCoreRelationshipsPractice.Dtos;
 using EFCoreRelationshipsPractice.Services;
 using Microsoft.AspNetCore.Mvc;
 
