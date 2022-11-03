@@ -1,4 +1,8 @@
-﻿namespace EFCoreRelationshipsPracticeTest
+﻿using System;
+using System.Net.Http;
+using Xunit;
+
+namespace EFCoreRelationshipsPracticeTest
 {
     public class TestBase : IClassFixture<CustomWebApplicationFactory<Program>>, IDisposable
     {
