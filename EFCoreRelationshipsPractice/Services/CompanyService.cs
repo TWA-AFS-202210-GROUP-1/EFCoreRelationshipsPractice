@@ -49,7 +49,12 @@ namespace EFCoreRelationshipsPractice.Services
 
         public async Task DeleteCompany(int id)
         {
-            throw new NotImplementedException();
+            var companyEntity = await companyDbContext.Companies
+                .Include(company => company.EmployeeList)
+                .Include(company => company.Profile)
+                .FirstOrDefaultAsync(company => company.Id.Equals(id));
+            companyDbContext.Companies.Remove(companyEntity);
+            await companyDbContext.SaveChangesAsync();
         }
     }
 }
