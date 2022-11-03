@@ -8,6 +8,11 @@ namespace EFCoreRelationshipsPractice.Dtos
         {
         }
 
+        public CompanyDto(CompanyEntity companyEntity)
+        {
+            Name = companyEntity.Name;
+        }
+
         public string Name { get; set; }
 
         public ProfileDto? Profile { get; set; }

@@ -31,7 +31,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var allCompaniesResponse = await client.GetAsync("/companies");
             var body = await allCompaniesResponse.Content.ReadAsStringAsync();
 
-            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
+            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyEntity>>(body);
 
             Assert.Single(returnCompanies);
         }
@@ -139,7 +139,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var allCompaniesResponse = await client.GetAsync("/companies");
             var body = await allCompaniesResponse.Content.ReadAsStringAsync();
 
-            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
+            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyEntity>>(body);
 
             Assert.Empty(returnCompanies);
         }
@@ -194,7 +194,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var allCompaniesResponse = await client.GetAsync("/companies");
             var body = await allCompaniesResponse.Content.ReadAsStringAsync();
 
-            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
+            var returnCompanies = JsonConvert.DeserializeObject<List<CompanyEntity>>(body);
 
             Assert.Equal(2, returnCompanies.Count);
         }
@@ -250,7 +250,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var allCompaniesResponse = await client.GetAsync(companyResponse.Headers.Location);
             var body = await allCompaniesResponse.Content.ReadAsStringAsync();
 
-            var returnCompany = JsonConvert.DeserializeObject<CompanyDto>(body);
+            var returnCompany = JsonConvert.DeserializeObject<CompanyEntity>(body);
 
             Assert.Equal("IBM", returnCompany.Name);
         }
