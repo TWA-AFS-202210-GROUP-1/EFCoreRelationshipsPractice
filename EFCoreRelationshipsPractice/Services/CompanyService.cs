@@ -27,9 +27,13 @@ namespace EFCoreRelationshipsPractice.Services
                 .Select(company => new CompanyDto(company)).ToList();
         }
 
-        public async Task<CompanyDto> GetById(long id)
+        public async Task<CompanyDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var companyEntity = companyDbContext.Companies
+                .Include(_ => _.Profile)
+                .Include(_ => _.Employees)
+                .FirstOrDefault(_ => _.Id == id);
+            return new CompanyDto(companyEntity);
         }
 
         public async Task<int> AddCompany(CompanyDto companyDto)
