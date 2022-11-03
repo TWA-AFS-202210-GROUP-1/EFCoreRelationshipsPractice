@@ -1,5 +1,6 @@
 ﻿using EFCoreRelationshipsPractice.Model;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace EFCoreRelationshipsPractice.Dtos
 {
@@ -20,5 +21,12 @@ namespace EFCoreRelationshipsPractice.Dtos
 
     public List<EmployeeDto>? Employees { get; set; }
 
+    public CompanyEntity ToEntity()
+    {
+      return new CompanyEntity()
+      {
+        Name = Name,
+      };
+    }
   }
 }

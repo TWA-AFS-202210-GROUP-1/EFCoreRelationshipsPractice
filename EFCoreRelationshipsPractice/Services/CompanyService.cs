@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EFCoreRelationshipsPractice.Dtos;
+using EFCoreRelationshipsPractice.Model;
 using EFCoreRelationshipsPractice.Repository;
 
 namespace EFCoreRelationshipsPractice.Services
@@ -30,7 +31,11 @@ namespace EFCoreRelationshipsPractice.Services
 
     public async Task<int> AddCompany(CompanyDto companyDto)
     {
-      throw new NotImplementedException();
+      CompanyEntity companyEntity = companyDto.ToEntity();
+      await companyDbContext.Companies.AddAsync(companyEntity);
+      await companyDbContext.SaveChangesAsync();
+
+      return companyEntity.Id;
     }
 
     public async Task DeleteCompany(int id)
