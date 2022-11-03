@@ -18,6 +18,7 @@ namespace EFCoreRelationshipsPracticeTest
             var scopedServices = scope.ServiceProvider;
             var context = scopedServices.GetRequiredService<CompanyDbContext>();
 
+            context.Employees.RemoveRange(context.Employees); // clear employees
             context.Companies.RemoveRange(context.Companies); // clear companies
 
             context.SaveChanges();
