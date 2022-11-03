@@ -152,6 +152,58 @@ namespace EFCoreRelationshipsPracticeTest.ServiceTest
       Assert.Equal(companyDto1.Name, returnedCompany.Name);
     }
 
+    [Fact]
+    public async Task Should_delete_company_by_id_successfully_via_company_service()
+    {
+      // give
+      var context = GetCompanyDbContext();
+      CompanyDto companyDto1 = new CompanyDto
+      {
+        Name = "IBM",
+        EmployeeDtos = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                },
+        ProfileDto = new ProfileDto()
+        {
+          RegisteredCapital = 100010,
+          CertId = "100",
+        },
+      };
+
+      CompanyDto companyDto2 = new CompanyDto
+      {
+        Name = "MS",
+        EmployeeDtos = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Jerry",
+                        Age = 18,
+                    },
+                },
+        ProfileDto = new ProfileDto()
+        {
+          RegisteredCapital = 100020,
+          CertId = "101",
+        },
+      };
+      CompanyService companyService = new CompanyService(context);
+      var companyId = await companyService.AddCompany(companyDto1);
+      await companyService.AddCompany(companyDto2);
+
+      // when
+      await companyService.DeleteCompany(companyId);
+
+      // then
+      Assert.Equal(1, context.Companies.Count());
+      Assert.Equal(companyDto2.Name, context.Companies.First().Name);
+    }
+
     private CompanyDbContext GetCompanyDbContext()
     {
       var scope = Factory.Services.CreateScope();
