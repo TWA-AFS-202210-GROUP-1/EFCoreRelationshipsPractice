@@ -1,4 +1,5 @@
 ﻿using EFCoreRelationshipsPractice.Model;
+using System;
 using System.Collections.Generic;
 
 namespace EFCoreRelationshipsPractice.Dtos
@@ -20,5 +21,12 @@ namespace EFCoreRelationshipsPractice.Dtos
 
         public List<EmployeeDto>? Employees { get; set; }
 
+        public CompanyEntity ToEntity()
+        {
+            return new CompanyEntity()
+            {
+                Name = this.Name
+            };
+        }
     }
 }
