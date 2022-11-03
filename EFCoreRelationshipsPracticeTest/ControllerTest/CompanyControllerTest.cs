@@ -144,7 +144,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Empty(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_many_companies_success()
         {
             var client = GetClient();
