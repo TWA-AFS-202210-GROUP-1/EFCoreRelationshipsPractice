@@ -199,7 +199,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(2, returnCompanies.Count);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_get_company_by_id_success()
         {
             var client = GetClient();
