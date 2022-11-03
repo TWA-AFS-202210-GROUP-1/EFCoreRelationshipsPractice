@@ -21,6 +21,10 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             {
                 Name = "IBM",
             };
+            //CompanyDto companyDto = new CompanyDto(name);
+            //{
+            //    Name = "IBM",
+            //};
 
             // when
             var httpContent = JsonConvert.SerializeObject(companyDto);
