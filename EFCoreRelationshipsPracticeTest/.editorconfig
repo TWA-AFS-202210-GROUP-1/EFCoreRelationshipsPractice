@@ -143,6 +143,8 @@ dotnet_diagnostic.SA1519.severity = error
 
 dotnet_diagnostic.SA1600.severity = silent
 
+dotnet_diagnostic.SA1601.severity = silent
+
 dotnet_diagnostic.SA1611.severity = none
 
 dotnet_diagnostic.SA1615.severity = none
@@ -152,3 +154,6 @@ dotnet_diagnostic.SA1633.severity = none
 dotnet_diagnostic.SA1649.severity = none
 
 dotnet_diagnostic.SA1652.severity = none
+
+# IDE0090: Use 'new(...)'
+csharp_style_implicit_object_creation_when_type_is_apparent = false

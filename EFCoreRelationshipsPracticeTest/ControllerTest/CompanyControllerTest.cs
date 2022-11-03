@@ -13,7 +13,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     }
 
     [Fact]
-    public async Task Should_create_company_success()
+    public async Task Should_create_company_successfully()
     {
       // given
       var client = GetClient();
@@ -36,15 +36,15 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       Assert.Single(returnCompanies);
     }
 
-    [Fact(Skip = "fix it later")]
-    public async Task Should_create_company_with_profile_success()
+    [Fact]
+    public async Task Should_create_company_with_profile_successfully()
     {
       // given
       var client = GetClient();
       CompanyDto companyDto = new CompanyDto
       {
         Name = "IBM",
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
           CertId = "100",
@@ -63,12 +63,12 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
       Assert.Single(returnCompanies);
-      Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-      Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
+      Assert.Equal(companyDto.ProfileDto.CertId, returnCompanies[0].ProfileDto.CertId);
+      Assert.Equal(companyDto.ProfileDto.RegisteredCapital, returnCompanies[0].ProfileDto.RegisteredCapital);
     }
 
     [Fact(Skip = "fix it later")]
-    public async Task Should_create_company_with_profile_and_employees_success()
+    public async Task Should_create_company_with_profile_and_employees_successfully()
     {
       // given
       var client = GetClient();
@@ -83,7 +83,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
           CertId = "100",
@@ -102,15 +102,15 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
       var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
       Assert.Single(returnCompanies);
-      Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-      Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
+      Assert.Equal(companyDto.ProfileDto.CertId, returnCompanies[0].ProfileDto.CertId);
+      Assert.Equal(companyDto.ProfileDto.RegisteredCapital, returnCompanies[0].ProfileDto.RegisteredCapital);
       Assert.Equal(companyDto.Employees.Count, returnCompanies[0].Employees.Count);
       Assert.Equal(companyDto.Employees[0].Age, returnCompanies[0].Employees[0].Age);
       Assert.Equal(companyDto.Employees[0].Name, returnCompanies[0].Employees[0].Name);
     }
 
     [Fact(Skip = "fix it later")]
-    public async Task Should_delete_company_and_related_employee_and_profile_success()
+    public async Task Should_delete_company_and_related_employee_and_profile_successfully()
     {
       var client = GetClient();
       CompanyDto companyDto = new CompanyDto
@@ -124,7 +124,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
           CertId = "100"
@@ -145,7 +145,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     }
 
     [Fact(Skip = "fix it later")]
-    public async Task Should_create_many_companies_success()
+    public async Task Should_create_many_companies_successfully()
     {
       var client = GetClient();
       CompanyDto companyDto = new CompanyDto
@@ -159,7 +159,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
           CertId = "100",
@@ -177,7 +177,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100020,
           CertId = "101",
@@ -200,7 +200,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     }
 
     [Fact(Skip = "fix it later")]
-    public async Task Should_get_company_by_id_success()
+    public async Task Should_get_company_by_id_successfully()
     {
       var client = GetClient();
       CompanyDto companyDto = new CompanyDto
@@ -214,7 +214,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100010,
           CertId = "100",
@@ -232,7 +232,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-        Profile = new ProfileDto()
+        ProfileDto = new ProfileDto()
         {
           RegisteredCapital = 100020,
           CertId = "101",
