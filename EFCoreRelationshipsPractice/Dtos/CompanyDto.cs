@@ -8,11 +8,27 @@ namespace EFCoreRelationshipsPractice.Dtos
         {
         }
 
+        public CompanyDto(CompanyEntity companyEntity)
+        {
+            Name = companyEntity.Name;
+            ProfileDto = companyEntity.Profile != null ? new ProfileDto(companyEntity.Profile) : null;
+            EmployeeDtos = companyEntity.Employees?.Select(EmployeeEntity => new EmployeeDto(EmployeeEntity)).ToList();
+        }
+
         public string Name { get; set; }
 
-        public ProfileDto? Profile { get; set; }
+        public ProfileDto? ProfileDto { get; set; }
 
-        public List<EmployeeDto>? Employees { get; set; }
+        public List<EmployeeDto>? EmployeeDtos { get; set; }
 
+        public CompanyEntity ToEntity()
+        {
+            return new CompanyEntity()
+            {
+                Name = Name,
+                Profile = ProfileDto?.ToEntity(), // Profile = ProfileDto != null ? ProfileDto.ToEntity(): null,
+                Employees = EmployeeDtos?.Select(employeeDto => employeeDto.ToEntity()).ToList(),
+            };
+        }
     }
 }
