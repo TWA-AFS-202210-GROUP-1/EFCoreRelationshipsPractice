@@ -1,4 +1,10 @@
-﻿namespace EFCoreRelationshipsPracticeTest
+﻿using EFCoreRelationshipsPractice.Repository;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Net.Http;
+using Xunit;
+
+namespace EFCoreRelationshipsPracticeTest
 {
     public class TestBase : IClassFixture<CustomWebApplicationFactory<Program>>, IDisposable
     {
@@ -11,13 +17,13 @@
 
         public void Dispose()
         {
-            // var scope = Factory.Services.CreateScope();
-            // var scopedServices = scope.ServiceProvider;
-            // var context = scopedServices.GetRequiredService<CompanyDbContext>();
-            //
-            // context.Companies.RemoveRange(context.Companies);
-            //
-            // context.SaveChanges();
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            var context = scopedServices.GetRequiredService<CompanyDbContext>();
+            context.Employees.RemoveRange(context.Employees);
+            context.Companies.RemoveRange(context.Companies);
+            context.Profiles.RemoveRange(context.Profiles);
+            context.SaveChanges();
         }
 
         protected HttpClient GetClient()
