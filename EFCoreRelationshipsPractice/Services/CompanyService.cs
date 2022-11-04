@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFCoreRelationshipsPractice.Dtos;
 using EFCoreRelationshipsPractice.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreRelationshipsPractice.Services
 {
@@ -18,22 +19,45 @@ namespace EFCoreRelationshipsPractice.Services
 
         public async Task<List<CompanyDto>> GetAll()
         {
-            throw new NotImplementedException();
+
+            return this.companyDbContext.Companies
+                .Include( _ => _.Profile)
+                .Include(_ => _.Employees)
+                .ToList()
+                .Select(company => new CompanyDto(company)).ToList();
         }
 
-        public async Task<CompanyDto> GetById(long id)
+        public async Task<CompanyDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var companyEntity = companyDbContext.Companies
+                .Include(_ => _.Profile)
+                .Include(_ => _.Employees)
+                .FirstOrDefault(_ => _.Id == id);
+            return new CompanyDto(companyEntity);
         }
 
         public async Task<int> AddCompany(CompanyDto companyDto)
         {
-            throw new NotImplementedException();
+            var companyEntity = companyDto.ToEntity();
+            await companyDbContext.Companies.AddAsync(companyEntity);
+            await this.companyDbContext.SaveChangesAsync();
+
+            return companyEntity.Id;
+
         }
 
         public async Task DeleteCompany(int id)
         {
-            throw new NotImplementedException();
+           
+            var companyEntityToBeDeleted = await companyDbContext.Companies
+                .Include(_ => _.Profile)
+                .Include(_ => _.Employees)
+                .FirstOrDefaultAsync(_=>_.Id ==id);
+            companyDbContext.Employees.RemoveRange(companyEntityToBeDeleted.Employees);
+            companyDbContext.Companies.Remove(companyEntityToBeDeleted);
+            companyDbContext.Profiles.Remove(companyEntityToBeDeleted.Profile);
+
+            await companyDbContext.SaveChangesAsync();
         }
     }
 }
