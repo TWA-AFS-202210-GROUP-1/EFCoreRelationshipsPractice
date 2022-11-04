@@ -5,6 +5,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
     using EFCoreRelationshipsPractice.Dtos;
     using Newtonsoft.Json;
 
+    [Collection("CompanyCollection")]
     public class CompanyControllerTest : TestBase
     {
         public CompanyControllerTest(CustomWebApplicationFactory<Program> factory)
@@ -20,7 +21,16 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
+                //ProfileDTO = new ProfileDto()
+                //{
+                //    RegisteredCapital = 100010,
+                //    CertId = "100",
+                //},
             };
+            //CompanyDto companyDto = new CompanyDto(name);
+            //{
+            //    Name = "IBM",
+            //};
 
             // when
             var httpContent = JsonConvert.SerializeObject(companyDto);
@@ -36,7 +46,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Single(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_company_with_profile_success()
         {
             // given
@@ -44,7 +54,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -63,11 +73,11 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Single(returnCompanies);
-            Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
+            Assert.Equal(companyDto.ProfileDTO.CertId, returnCompanies[0].ProfileDTO.CertId);
+            Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_company_with_profile_and_employees_success()
         {
             // given
@@ -75,7 +85,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -83,7 +93,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -102,21 +112,21 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Single(returnCompanies);
-            Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
-            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
-            Assert.Equal(companyDto.Employees.Count, returnCompanies[0].Employees.Count);
-            Assert.Equal(companyDto.Employees[0].Age, returnCompanies[0].Employees[0].Age);
-            Assert.Equal(companyDto.Employees[0].Name, returnCompanies[0].Employees[0].Name);
+            Assert.Equal(companyDto.ProfileDTO.CertId, returnCompanies[0].ProfileDTO.CertId);
+            Assert.Equal(companyDto.ProfileDTO.RegisteredCapital, returnCompanies[0].ProfileDTO.RegisteredCapital);
+            Assert.Equal(companyDto.EmployeesDTO.Count, returnCompanies[0].EmployeesDTO.Count);
+            Assert.Equal(companyDto.EmployeesDTO[0].Age, returnCompanies[0].EmployeesDTO[0].Age);
+            Assert.Equal(companyDto.EmployeesDTO[0].Name, returnCompanies[0].EmployeesDTO[0].Name);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_delete_company_and_related_employee_and_profile_success()
         {
             var client = GetClient();
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -124,7 +134,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100"
@@ -144,14 +154,14 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Empty(returnCompanies);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_create_many_companies_success()
         {
             var client = GetClient();
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -159,7 +169,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -169,7 +179,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto2 = new CompanyDto
             {
                 Name = "MS",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -177,7 +187,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100020,
                     CertId = "101",
@@ -199,14 +209,14 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             Assert.Equal(2, returnCompanies.Count);
         }
 
-        [Fact(Skip = "fix it later")]
+        [Fact]
         public async Task Should_get_company_by_id_success()
         {
             var client = GetClient();
             CompanyDto companyDto = new CompanyDto
             {
                 Name = "IBM",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -214,7 +224,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 19,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100010,
                     CertId = "100",
@@ -224,7 +234,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
             CompanyDto companyDto2 = new CompanyDto
             {
                 Name = "MS",
-                Employees = new List<EmployeeDto>()
+                EmployeesDTO = new List<EmployeeDto>()
                 {
                     new EmployeeDto()
                     {
@@ -232,7 +242,7 @@ namespace EFCoreRelationshipsPracticeTest.ControllerTest
                         Age = 18,
                     },
                 },
-                Profile = new ProfileDto()
+                ProfileDTO = new ProfileDto()
                 {
                     RegisteredCapital = 100020,
                     CertId = "101",
