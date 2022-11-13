@@ -20,7 +20,7 @@ namespace EFCoreRelationshipsPractice.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyDto>>> List()
+        public async Task<ActionResult<IEnumerable<CompanyDto>>> List() // IEnumerable所有集合接口
         {
             var companyDtos = await this.companyService.GetAll();
 
